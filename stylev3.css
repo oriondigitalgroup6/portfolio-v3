@@ -1,0 +1,208 @@
+:root {
+    --bg-dark: #030407;
+    --gold-primary: #D4AF37;
+    --gold-light: #F3E5AB;
+    --text-white: #FAFAFA;
+    --font-luxury: 'Cinzel', serif;
+    --font-tech: 'Outfit', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    font-family: var(--font-tech);
+    overflow-x: hidden;
+    cursor: none; /* Cache le curseur par défaut */
+}
+
+/* --- Curseur Élite --- */
+.cursor-dot, .cursor-outline {
+    position: fixed;
+    top: 0; left: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 10000;
+    pointer-events: none;
+}
+.cursor-dot {
+    width: 8px; height: 8px;
+    background-color: var(--gold-primary);
+}
+.cursor-outline {
+    width: 40px; height: 40px;
+    border: 1px solid var(--gold-primary);
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
+    mix-blend-mode: difference; /* Effet de couleur inversée sur le texte blanc */
+}
+.cursor-outline.hover-active {
+    width: 80px; height: 80px;
+    background-color: var(--text-white);
+    border-color: transparent;
+    mix-blend-mode: difference;
+}
+
+/* --- Grain Cinématique --- */
+.noise-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.04;
+    background: url('https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Dissolve_Noise_Texture.png');
+    animation: noise 0.5s infinite;
+}
+@keyframes noise {
+    0% { transform: translate(0, 0); }
+    10% { transform: translate(-5%, -5%); }
+    20% { transform: translate(-10%, 5%); }
+    30% { transform: translate(5%, -10%); }
+    40% { transform: translate(-5%, 15%); }
+    50% { transform: translate(-10%, 5%); }
+    60% { transform: translate(15%, 0); }
+    70% { transform: translate(0, 10%); }
+    80% { transform: translate(-15%, 0); }
+    90% { transform: translate(10%, 5%); }
+    100% { transform: translate(5%, 0); }
+}
+
+/* --- Animation Intro --- */
+.intro-container {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: var(--bg-dark);
+    display: flex;
+    justify-content: center; align-items: center;
+    z-index: 5000;
+}
+.intro-bg {
+    position: absolute;
+    width: 0%; height: 2px;
+    background: var(--gold-primary);
+    box-shadow: 0 0 20px var(--gold-primary);
+}
+.intro-logo {
+    font-family: var(--font-luxury);
+    font-size: 8vw;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.1);
+    position: relative;
+}
+.intro-logo::before {
+    content: attr(data-text);
+    position: absolute;
+    left: 0; top: 0;
+    width: 0%; height: 100%;
+    color: var(--gold-primary);
+    -webkit-text-stroke: 0px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-shadow: 0 0 40px rgba(212, 175, 55, 0.8);
+}
+.intro-flash {
+    position: absolute;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: #fff;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* --- Header & Layout --- */
+.header {
+    position: fixed;
+    top: 0; width: 100%;
+    padding: 40px 5%;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 100;
+    opacity: 0; /* Caché pour l'intro */
+}
+.logo { font-family: var(--font-luxury); font-size: 2rem; font-weight: 900; color: var(--gold-primary); }
+.nav a {
+    color: var(--text-white); text-decoration: none;
+    margin-left: 40px; font-weight: 300; letter-spacing: 2px;
+    text-transform: uppercase; display: inline-block;
+}
+
+/* --- Hero Section --- */
+.hero {
+    height: 100vh;
+    display: flex; justify-content: center; align-items: center;
+    position: relative;
+}
+.hero-wrapper {
+    position: relative; z-index: 10;
+    text-align: center;
+}
+.hero-text-mask { overflow: hidden; margin-bottom: 10px; }
+.hero-title {
+    font-family: var(--font-luxury);
+    font-size: 6rem; line-height: 1.1;
+    transform: translateY(100%); /* Caché pour GSAP */
+}
+.gold-text {
+    background: linear-gradient(45deg, var(--gold-primary), var(--gold-light), #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px rgba(212,175,55,0.3);
+}
+.hero-subtitle {
+    margin-top: 20px; font-size: 1.2rem; color: #aaa;
+    letter-spacing: 4px; opacity: 0;
+}
+
+/* --- Le VRAI Bouton Premium (Magnétique) --- */
+.btn-container { margin-top: 50px; opacity: 0; }
+.btn-elite {
+    position: relative;
+    display: inline-block;
+    padding: 20px 50px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(212,175,55,0.3);
+    border-radius: 50px;
+    color: var(--gold-primary);
+    font-family: var(--font-tech);
+    text-transform: uppercase; letter-spacing: 2px;
+    text-decoration: none; overflow: hidden;
+    backdrop-filter: blur(10px);
+    transition: border-color 0.4s;
+}
+.btn-text { position: relative; z-index: 2; font-weight: 600; }
+.btn-glow {
+    position: absolute; top: 50%; left: 50%;
+    width: 0; height: 0;
+    background: var(--gold-primary);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s cubic-bezier(0.19, 1, 0.22, 1), height 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    z-index: 1;
+}
+.btn-elite:hover { border-color: var(--gold-primary); color: var(--bg-dark); }
+.btn-elite:hover .btn-glow { width: 300px; height: 300px; box-shadow: 0 0 40px var(--gold-primary); }
+
+/* --- Canvas Interactive Background --- */
+#hero-canvas {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%; z-index: 1; opacity: 0.6;
+}
+
+/* --- Section Expertise (Cartes Glassmorphism) --- */
+.expertise { padding: 150px 5%; background: #010204; }
+.section-heading { font-family: var(--font-luxury); font-size: 4rem; color: var(--text-white); text-align: center; margin-bottom: 80px; }
+.cards-container { display: flex; gap: 40px; justify-content: center; }
+.glass-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    padding: 60px 40px; border-radius: 20px;
+    width: 400px; position: relative; overflow: hidden;
+    backdrop-filter: blur(20px);
+    transition: transform 0.3s;
+}
+.glass-card h3 { font-family: var(--font-luxury); font-size: 2rem; color: var(--gold-primary); margin-bottom: 20px; }
+.glass-card p { font-size: 1.1rem; color: #888; line-height: 1.6; }
+.card-glow {
+    position: absolute; top: -50px; left: -50px;
+    width: 150px; height: 150px;
+    background: radial-gradient(circle, rgba(212,175,55,0.2) 0%, transparent 70%);
+    pointer-events: none; transition: 0.1s;
+}
